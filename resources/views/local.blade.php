@@ -1,6 +1,8 @@
-            @include ('layouts.head')
+
                 <!-- Posts -->
-                
+@extends ('app')
+
+@section ('content')
                 <div class="mt-16">
                     <div class="">
                         <div class="">
@@ -12,21 +14,13 @@
                                 </p>
 
                             </div>
-
                         
                         </div>
                     </div>
                 </div>
 
                 <div class="text-center  p-6 lg:p-8">
-                    <a href="/local">Back to locale &rarr;</a>
+                    <a href="/locale">Back to locale &rarr;</a>
                 </div>
-                
-     
-                @include ('layouts.footer')
-                    <!-- Footer Partial -->
-                </div>
-            </div>
-        </div>
-    </body>
-</html>
+
+@endsection

@@ -13,6 +13,13 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('inspire')->hourly();
+        $schedule->call(function () {
+            SitemapGenerator::create('https://epiclawns.com.au')
+                ->add(URL::to('/'))
+                ->add(URL::to('/posts'))
+                ->add(URL::to('/contact'))
+                ->writeToFile(public_path('sitemap.xml'));
+        })->daily();
     }
 
     /**

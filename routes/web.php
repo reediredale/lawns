@@ -13,16 +13,25 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Sitemap 
+use Spatie\Sitemap\SitemapGenerator;
 
-// Add region to home
+Route::get('/sitemap.xml', function () {
+    SitemapGenerator::create('https://epiclawns.com.au')
+        ->add(URL::to('/'))
+        ->add(URL::to('/locale'))
+        ->add(URL::to('/contact'))
+        ->writeToFile(public_path('sitemap.xml'));
 
-Route::get('/', function () {
-
-    return view('home-region', [
-        'locale' => App\Models\Local::all()
-    ]);
-
+    return 'Sitemap generated successfully.';
 });
+
+
+// Route Home
+
+use App\Http\Controllers\HomeController;
+Route::get('/', 'App\Http\Controllers\HomeController@index')->name('home');
+
 
 // Add posts 
 
@@ -52,7 +61,7 @@ Route::get('/locale', function () {
 
 });
 
-Route::get('local/{local:slug}', function (App\Models\Local $local) {
+Route::get('locale/{local:slug}', function (App\Models\Local $local) {
     
     return view('local', [
         'local' => $local
