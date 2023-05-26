@@ -14,21 +14,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Sitemap 
-use Spatie\Sitemap\SitemapGenerator;
-
-Route::get('/sitemap.xml', function () {
-    SitemapGenerator::create('https://epiclawns.com.au')
-        ->add(URL::to('/'))
-        ->add(URL::to('/locale'))
-        ->add(URL::to('/contact'))
-        ->writeToFile(public_path('sitemap.xml'));
-
-    return 'Sitemap generated successfully.';
-});
-
+use App\Http\Controllers\SitemapController;
+Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap.index');
 
 // Route Home
-
 use App\Http\Controllers\HomeController;
 Route::get('/', 'App\Http\Controllers\HomeController@index')->name('home');
 
@@ -51,25 +40,36 @@ Route::get('posts/{post:slug}', function (App\Models\Post $post) {
 
 });
 
-// Add regions
+// Add lawns
+// use App\Http\Controllers\LawnController;
 
-Route::get('/locale', function () {
+// Route::get('/lawns', 'LawnController@index')->name('lawns');
 
-    return view('locale', [
-        'locale' => App\Models\Local::all()
+Route::get('/lawns', function () {
+
+    return view('lawns', [
+        'lawns' => App\Models\Lawn::all()
     ]);
 
 });
 
-Route::get('locale/{local:slug}', function (App\Models\Local $local) {
+// Add lawn show
+Route::get('lawns/{lawn:slug}', function (App\Models\Lawn $lawn) {
     
-    return view('local', [
-        'local' => $local
+    return view('lawn', [
+        'lawn' => $lawn
     ]);
 
 });
 
 
+// OpenGraph 
+
+use App\Http\Controllers\BrowsershotController;
+
+Route::get('/lawns/{lawn:slug}/openGraphImage', [BrowsershotController::class, 'screenshotOpenGraph']);
+
+// Jetstream 
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),

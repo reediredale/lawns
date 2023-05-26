@@ -2,34 +2,29 @@
 
     @section ('content')
 
-    <div class="mt-16">
+    <div class="pt-16 pb-16 max-w-2xl mx-auto container">
+
+        <div class="pb-16">
+            <h1 class="font-semibold text-5xl text-center">Lawn Care Near Me</h1>
+            <p class="text-center">Australia's #1 lawn care website.</p>
+            <form action="">
+                
+            </form>
+        </div>
         
-        <h1 class="font-semibold text-xl text-center">Lawn Care Near Me</h1>
-        
-            <div class="mt-16">
+        <div id="regions" class="">
+            <div class="grid grid-cols-4 gap-4">
+                @foreach ($lawns as $lawn)
                 <div>
-                    <ul>  
-                    @foreach ($locale as $local)
-                    <div class="">
-                        <a href="/locale/{{ $local->slug }}" class="">
-                        
-                            <div>
-                     
-                                <h2 class=" text-xl font-semibold text-gray-900">
-                                   {{ $local->town }}
-                                </h2>
-
-                            </div>
-                            
-                        </a>
-                    </div>
-                    @endforeach
-                    </ul>
+                    <a href="/lawns/{{ $lawn->slug }}" class="">
+                        <h3 class="text-md font-semibold text-gray-900">
+                            {{ $lawn->name }}, {{ $lawn->state_code }}
+                        </h3>
+                    </a>
                 </div>
+                @endforeach
             </div>
-
-        <h2 class="font-semibold text-lg text-center">Popular Articles</h2>
-
+        </div>
     </div>
     @endsection
 

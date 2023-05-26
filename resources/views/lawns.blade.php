@@ -1,17 +1,24 @@
         
 @extends ('app')
+<h1>
+@section('title')Lawns@stop
+    </h1>
 
 @section ('content')
-
-    <div class="mt-16">
-    @foreach ($locale as $local)
+    
+    <div class="">
+    @foreach ($lawns as $lawn)
         <div class="">
-            <a href="/locale/{{ $local->slug }}" class="">
+            @php
+            $slug = Str::slug($lawn->name, '-');
+            @endphp
+
+            <a href="/lawns/{{ $slug }}" class="">
             
-                <div>
-            
+        <div>
+
                     <h2 class=" text-xl font-semibold text-gray-900">
-                        {{ $local->town }}
+                        {{ $lawn->name }}
                     </h2>
 
                 </div>
