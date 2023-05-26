@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Jobs;
-
+use App\Lawn;  
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -16,9 +16,9 @@ class GeneratePreview implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(Route $route)
+    public function __construct(Lawn $lawn)
     {
-        $this->route = $route;
+        $this->lawn = $lawn;
     }
 
     /**
@@ -43,12 +43,12 @@ class GeneratePreview implements ShouldQueue
         $left = 0;
 
         // Set the url to the page we want to capture
-        $route = url("/" . $this->route->id . "/preview");
+        $lawn = url("/lawns/$lawn->slug/preview");
 
         // Set the path for the image we want to save
-        $file = base_path('public/images/routes/' . $this->route->id . '.jpeg');
+        $file = base_path('public/images/lawns/' . $lawn->slug . '.jpeg');
 
-        $request = $client->getMessageFactory()->createCaptureRequest($route, 'GET');
+        $request = $client->getMessageFactory()->createCaptureRequest($lawn, 'GET');
         $request->setOutputFile($file);
         $request->setViewportSize($width, $height);
         $request->setCaptureDimensions($width, $height, $top, $left);

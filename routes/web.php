@@ -65,11 +65,25 @@ Route::get('lawns/{lawn:slug}', function (App\Models\Lawn $lawn) {
 
 // OpenGraph 
 
-use App\Http\Controllers\BrowsershotController;
+// use App\Http\Controllers\BrowsershotController;
+// Route::get('/lawns/abbeyard/openGraphImage', [BrowsershotController::class, 'screenshotOpenGraph']);
 
-Route::get('/lawns/{lawn:slug}/openGraphImage', [BrowsershotController::class, 'screenshotOpenGraph']);
 
-// Jetstream 
+use App\Models\Lawn;
+Route::get('lawns/{lawn:slug}', function ($slug) {
+    $lawn = Lawn::whereSlug($slug)->firstOrFail();
+
+    return view('lawn', ['lawn' => $lawn]);
+});
+
+Route::get('lawns/{lawn:slug}/preview', function ($slug) {
+    $lawn = Lawn::whereSlug($slug)->firstOrFail();
+
+    return view('lawns/openGraphImage', [
+        'lawn' => $lawn]);
+    })->name('lawn.openGraphImage');
+
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
