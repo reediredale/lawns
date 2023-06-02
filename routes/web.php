@@ -65,10 +65,6 @@ Route::get('lawns/{lawn:slug}', function (App\Models\Lawn $lawn) {
 
 // OpenGraph 
 
-// use App\Http\Controllers\BrowsershotController;
-// Route::get('/lawns/abbeyard/openGraphImage', [BrowsershotController::class, 'screenshotOpenGraph']);
-
-
 use App\Models\Lawn;
 Route::get('lawns/{lawn:slug}', function ($slug) {
     $lawn = Lawn::whereSlug($slug)->firstOrFail();
@@ -76,12 +72,17 @@ Route::get('lawns/{lawn:slug}', function ($slug) {
     return view('lawn', ['lawn' => $lawn]);
 });
 
-Route::get('lawns/{lawn:slug}/preview', function ($slug) {
+// Route::get('lawns/{lawn:slug}/preview', function ($slug) {
+Route::get('/lawns/abbeyard', function ($slug) {
     $lawn = Lawn::whereSlug($slug)->firstOrFail();
 
-    return view('lawns/openGraphImage', [
+    return view('lawns.openGraphImage', [
         'lawn' => $lawn]);
     })->name('lawn.openGraphImage');
+
+
+use App\Http\Controllers\BrowsershotController;
+Route::get('lawns/{lawn:slug}/preview', [BrowsershotController::class, 'screenshotGoogle']);
 
 
 Route::middleware([

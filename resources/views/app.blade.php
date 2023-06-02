@@ -6,10 +6,10 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         
         <!-- SEO -->
-        <title>
-           @yield('title') - Epic Lawns
-        </title>
-        <meta name="description" content="">
+        <title>@yield('title') - Epic Lawns</title>
+        <meta name="description" content="@yield('description')">
+
+        <!-- Facebook -->
         <meta property="og:title" content="@yield('title') - Epic Lawns">
         <meta property="og:description" content="@yield('description')">
         <meta property="og:url" content="https://epiclawns.com.au/">
@@ -17,6 +17,7 @@
         <meta property="og:image:width" content="1024">
         <meta property="og:image:height" content="512">
         <meta property="og:type" content="article">
+        <!-- Twitter -->
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:site" content="@reediredale">
         <meta name="twitter:title" content="@yield('description') - Epic Lawns">

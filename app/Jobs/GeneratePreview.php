@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Jobs;
-use App\Lawn;  
+
+use App\Models\Lawn;
+
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -26,6 +28,7 @@ class GeneratePreview implements ShouldQueue
      *
      * @return void
      */
+    
     public function handle()
     {
         $client = Client::getInstance();
@@ -43,10 +46,10 @@ class GeneratePreview implements ShouldQueue
         $left = 0;
 
         // Set the url to the page we want to capture
-        $lawn = url("/lawns/$lawn->slug/preview");
+        $lawn = url("lawns/" . $this->lawn->slug . "/preview");
 
         // Set the path for the image we want to save
-        $file = base_path('public/images/lawns/' . $lawn->slug . '.jpeg');
+        $file = base_path('public/images/lawns/' . $this->lawn->slug . '.jpeg');
 
         $request = $client->getMessageFactory()->createCaptureRequest($lawn, 'GET');
         $request->setOutputFile($file);
@@ -60,7 +63,7 @@ class GeneratePreview implements ShouldQueue
         $request->setFormat('jpeg');
 
         // Set a timeout to exit after 20 seconds in case something wrong happens
-        $request->setTimeout(20000);
+        $request->setTimeout(120);
         
         $response = $client->getMessageFactory()->createResponse();
 
